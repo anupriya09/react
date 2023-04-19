@@ -1,11 +1,22 @@
-.App {
-  border: 2px solid black;
-  margin: 10px;
+.mainContainer{
+  border: 2px solid #6b6b6b;
+  margin: 3%;
+  background-color: #d0d0d0;
+  padding:1%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.cityName{
+    float: right;
+  }
+
+.card-text{
+  margin-block : 0rem !important;
+  margin-inline: 0rem !important;
+}
+
+.weatherContainer{
+  display:flex;
+  flex-grow: 1;
 }
 
 @media (prefers-reduced-motion: no-preference) {
