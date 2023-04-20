@@ -2,20 +2,31 @@ import Form  from 'react-bootstrap/Form';
 import { Container,Card } from 'react-bootstrap';
 import './App.css';
 import { useState, useEffect } from 'react';
+import React from 'react';
+import PostsWithAxios from './PostsWithAxios';
 
-
-function AddCityForm(props){
+function AddCityForm(){
   return (    
   <Form>
     <Form.Group className="mb-3 weatherForm" controlId="formBasicEmail">
       <Form.Label>My Weather App</Form.Label>
-      <Form.Control className="cityName" type="text" placeholder="Enter city" onClick={props.onClickFunction}/>
+      <Form.Control className="cityName" type="text" placeholder="Enter city"/>
     </Form.Group >
   </Form >
   );
 }
 
-const weatherDatas = [
+interface WeatherData{
+  city: string;
+  current: string;
+  high: string;
+  low: string;
+  humidity: string;
+}
+
+interface WeatherDataArray extends Array<WeatherData>{}
+
+ const weatherDatas= [
   {
     city:"Toronto",current:"8",high:"11",low:"2",humidity:"70"
   },
@@ -27,14 +38,15 @@ const weatherDatas = [
   }
 ];
 
-function CityWeather(props){
+function CityWeather(props:{weatherData: WeatherData;}){
   return (
     /*<>
       </>{weatherDatas.map((datum) => (*/
       <Card style={{ width: 'fit-content' , border: '0.1rem black solid', padding:'0.5rem', margin:'1rem',textAlign:'center'}}>
         <Card.Body>
           <Card.Title>Weather Summary</Card.Title>
-          <Card.Text>{props.weatherData.name}</Card.Text>       
+          <Card.Text>{props.weatherData.city}</Card.Text>
+                 
         </Card.Body>
       </Card>
    /* ))}
@@ -45,7 +57,8 @@ function CityWeather(props){
 
 function App() {
 
-  const [weatherInputData, setWeatherInputData] =  useState([]);
+  const [weatherInputData, setWeatherInputData] =  useState<WeatherData>();
+
   useEffect(() => {
     // declare the data fetching function
     const fetchData = async () => {
@@ -58,18 +71,17 @@ function App() {
     fetchData()
       // make sure to catch any error
       .catch(console.error);
-  }, [])
+  }, [weatherInputData])
 
   
 
   return (
-    <Container maxWidth="lg" className="mainContainer" >
-      <AddCityForm onClickFunction={() => setWeatherInputData(weatherDatas)} />
-      <div className="weatherContainer" >
-        <CityWeather weatherData={weatherInputData} />
+    <Container  className="mainContainer" >
+      <AddCityForm />
+      <PostsWithAxios/>
+      <div   >
       </div>
     </Container>
-
-    );
+  );
 }
 export default App;
